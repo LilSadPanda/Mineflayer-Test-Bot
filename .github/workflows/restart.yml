@@ -1,0 +1,15 @@
+name: Ptero Restart
+
+on: [ push, pull_request ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+     - name: Restart Pterodactyl
+       uses: fjogeleit/http-request-action@master
+       with:
+         url: ${{ secrets.PANEL_URL }}api/client/servers/${{ secrets.PANEL_ID }}/power
+         method: POST
+         bearerToken    : ${{ secrets.API_KEY }}
+         data: '{ "signal": "restart" }'
